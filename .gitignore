@@ -1,0 +1,17 @@
+# Ignore all datasets
+dataset/*
+
+# But keep dataset folder structure
+!dataset/.gitkeep
+
+# Ignore processed outputs
+results/*
+logs/*
+
+# Ignore notebooks checkpoints
+*.ipynb_checkpoints
+
+# Ignore temporary/system files
+__pycache__/
+*.pyc
+.DS_Store
