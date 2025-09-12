@@ -1,0 +1,13 @@
+# Dataset structure
+touch dataset/.gitkeep
+touch dataset/CallChinses/.gitkeep
+touch dataset/CallChinses/raw/.gitkeep
+touch dataset/CallChinses/raw/sample/.gitkeep
+touch dataset/CallChinses/raw/full/.gitkeep
+touch dataset/CallChinses/processed/.gitkeep
+
+# Results structure
+touch results/.gitkeep
+touch results/models/.gitkeep
+touch results/reports/.gitkeep
+touch results/logs/.gitkeep
