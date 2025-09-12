@@ -1,5 +1,5 @@
 dataset:
-  base_path: "/content/drive/MyDrive/fraud_detection/dataset/CallChinses/raw/sample"
+  base_path: "/content/drive/MyDrive/Sem-6/coding/github/fraud_detection/dataset/CallChinses/raw/sample"
   files:
     app: "test_app.csv"
     sms: "test_sms.csv"
