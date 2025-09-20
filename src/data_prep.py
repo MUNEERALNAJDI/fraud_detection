@@ -114,3 +114,84 @@ def quick_eda(df, target_col=None):
         summary["fraud_ratio"] = ratio
     logger.info(f"EDA summary: {summary}")
     return summary
+
+# ==========================
+# Feature Table Builder
+# ==========================
+def build_feature_table(data: dict):
+    """
+    Merge APP, SMS, USER, VOC datasets on phone_no_m into a single feature table.
+    Each dataset is aggregated per phone_no_m, then merged into one DataFrame.
+    
+    Parameters
+    ----------
+    data : dict
+        Dictionary of raw DataFrames, e.g. {"app": df_app, "sms": df_sms, "user": df_user, "voc": df_voc}
+    
+    Returns
+    -------
+    feature_df : pd.DataFrame
+        Merged feature table with one row per phone_no_m
+    """
+
+    feature_parts = []
+
+    # --------------------------
+    # APP features
+    # --------------------------
+    if "app" in data:
+        df = data["app"].copy()
+        app_feat = df.groupby("phone_no_m").agg(
+            app_count=("busi_name", "nunique"),
+            total_flow=("flow", "sum"),
+            avg_flow=("flow", "mean")
+        ).reset_index()
+        feature_parts.append(app_feat)
+
+    # --------------------------
+    # SMS features
+    # --------------------------
+    if "sms" in data:
+        df = data["sms"].copy()
+        sms_feat = df.groupby("phone_no_m").agg(
+            sms_count=("opposite_no_m", "count"),
+            unique_contacts=("opposite_no_m", "nunique")
+        ).reset_index()
+        feature_parts.append(sms_feat)
+
+    # --------------------------
+    # USER features (static profile)
+    # --------------------------
+    if "user" in data:
+        df = data["user"].copy()
+        user_feat = df.drop_duplicates(subset=["phone_no_m"])
+        feature_parts.append(user_feat)
+
+    # --------------------------
+    # VOC features (calls)
+    # --------------------------
+    if "voc" in data:
+        df = data["voc"].copy()
+        voc_feat = df.groupby("phone_no_m").agg(
+            call_count=("opposite_no_m", "count"),
+            unique_callers=("opposite_no_m", "nunique"),
+            avg_call_dur=("call_dur", "mean"),
+            total_call_dur=("call_dur", "sum")
+        ).reset_index()
+        feature_parts.append(voc_feat)
+
+    # --------------------------
+    # Merge all features
+    # --------------------------
+    from functools import reduce
+    feature_df = reduce(
+        lambda left, right: pd.merge(left, right, on="phone_no_m", how="outer"),
+        feature_parts
+    )
+
+    # --------------------------
+    # Handle missing values
+    # --------------------------
+    feature_df = feature_df.fillna(0)
+
+    return feature_df
