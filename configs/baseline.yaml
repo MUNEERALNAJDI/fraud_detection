@@ -12,4 +12,3 @@ training:
 
 output:
   results_dir: "results/"
-
