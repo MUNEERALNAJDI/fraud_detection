@@ -7,3 +7,4 @@ ydata-profiling
 sweetviz
 featuretools
 tsfresh
+great_expectations
