@@ -12,3 +12,8 @@ training:
 
 output:
   results_dir: "results/"
+
+preprocessing:
+  numeric_features: ["app_count", "total_flow", "avg_flow", "sms_count", "call_count", "avg_call_dur", "total_call_dur"]
+  categorical_features: ["city_name", "county_name"]
+  target: "label"

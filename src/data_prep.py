@@ -195,3 +195,34 @@ def build_feature_table(data: dict):
     feature_df = feature_df.fillna(0)
 
     return feature_df
+
+from ydata_profiling import ProfileReport
+
+def generate_profile(df, output_file="results/profile_report.html"):
+    """Generate a full HTML profiling report for a DataFrame."""
+    profile = ProfileReport(df, explorative=True)
+    profile.to_file(output_file)
+    logger.info(f"Profile report saved to {output_file}")
+
+
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+
+def preprocess_features(df, numeric_cols, categorical_cols):
+    """
+    Apply scaling to numeric cols and one-hot encode categorical cols.
+    Returns transformed DataFrame ready for ML.
+    """
+    # Scale numeric
+    scaler = StandardScaler()
+    df[numeric_cols] = scaler.fit_transform(df[numeric_cols])
+
+    # Encode categorical
+    encoder = OneHotEncoder(sparse=False, handle_unknown="ignore")
+    encoded = encoder.fit_transform(df[categorical_cols])
+    encoded_df = pd.DataFrame(encoded, columns=encoder.get_feature_names_out(categorical_cols))
+
+    # Merge back
+    df = df.drop(columns=categorical_cols).reset_index(drop=True)
+    df = pd.concat([df, encoded_df], axis=1)
+
+    return df
