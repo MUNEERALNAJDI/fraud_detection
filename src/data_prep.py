@@ -198,17 +198,26 @@ def build_feature_table(data: dict):
 
 from ydata_profiling import ProfileReport
 
-profile = ProfileReport(
-    feature_df,
-    title="Fraud Detection EDA Report",
-    explorative=True,
-    correlations={"cramers": {"calculate": False}},   # optional speed-up
-    missing_diagrams={"heatmap": False},              # disable some heavy plots
-    interactions={"continuous": False},               # skip unnecessary
-    samples=None                                      # skip samples
-)
+def generate_profile(df, output_file="results/profile.html"):
+    """
+    Generate a profiling report (EDA) using ydata-profiling.
+    Automatically drops high-cardinality columns to avoid wordcloud errors.
+    """
+    # Drop problematic columns (e.g., unique IDs, hashes)
+    drop_cols = [col for col in df.columns if df[col].nunique() > 1000]
+    df_profile = df.drop(columns=drop_cols)
 
-profile.to_file("results/feature_profile.html")
+    profile = ProfileReport(
+        df_profile,
+        title="Fraud Detection EDA Report",
+        explorative=True,
+        correlations={"cramers": {"calculate": False}},   # faster
+        missing_diagrams={"heatmap": False},              # avoid heavy plots
+        interactions={"continuous": False}                # simplify
+    )
+    profile.to_file(output_file)
+    return output_file
+
 
 
 
