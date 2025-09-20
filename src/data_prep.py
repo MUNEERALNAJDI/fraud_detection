@@ -6,15 +6,21 @@ import logging
 # ==========================
 # Logging Setup
 # ==========================
+
+
+# Make sure results directory exists
+os.makedirs("results", exist_ok=True)
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
     handlers=[
-        logging.StreamHandler(),                         # print to console
-        logging.FileHandler("results/data_prep.log")     # save to log file
+        logging.StreamHandler(),
+        logging.FileHandler("results/data_prep.log")
     ]
 )
 logger = logging.getLogger(__name__)
+
 
 
 # ==========================
