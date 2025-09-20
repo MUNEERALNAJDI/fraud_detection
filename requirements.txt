@@ -3,4 +3,7 @@ numpy
 scikit-learn
 pyyaml
 pytest
-
+ydata-profiling
+sweetviz
+featuretools
+tsfresh
