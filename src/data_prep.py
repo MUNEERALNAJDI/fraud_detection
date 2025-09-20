@@ -198,11 +198,18 @@ def build_feature_table(data: dict):
 
 from ydata_profiling import ProfileReport
 
-def generate_profile(df, output_file="results/profile_report.html"):
-    """Generate a full HTML profiling report for a DataFrame."""
-    profile = ProfileReport(df, explorative=True)
-    profile.to_file(output_file)
-    logger.info(f"Profile report saved to {output_file}")
+profile = ProfileReport(
+    feature_df,
+    title="Fraud Detection EDA Report",
+    explorative=True,
+    correlations={"cramers": {"calculate": False}},   # optional speed-up
+    missing_diagrams={"heatmap": False},              # disable some heavy plots
+    interactions={"continuous": False},               # skip unnecessary
+    samples=None                                      # skip samples
+)
+
+profile.to_file("results/feature_profile.html")
+
 
 
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
