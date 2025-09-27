@@ -1,10 +1,11 @@
-pandas
-numpy
-scikit-learn
+pandas>=2.0.0,<3.0.0
+numpy>=1.24.0,<2.0.0
+scikit-learn>=1.2.0,<1.5.0
 pyyaml
 pytest
-ydata-profiling
+ydata-profiling>=4.6.0
 sweetviz
 featuretools
 tsfresh
 great_expectations
+scipy==1.11.4   # 🔧 pinned to avoid profiling bug
