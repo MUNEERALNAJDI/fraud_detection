@@ -8,4 +8,4 @@ sweetviz
 featuretools
 tsfresh
 great_expectations
-scipy
+scipy==1.11.4

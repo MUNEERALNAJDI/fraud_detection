@@ -1,14 +1,14 @@
 dataset:
   base_path: "/content/drive/MyDrive/Sem-6/coding/github/fraud_detection/dataset/CallChinses/raw/sample"
   files:
-    app: "test_app.csv"
-    sms: "test_sms.csv"
-    user: "test_user.csv"
-    voc: "test_voc.csv"
+    app: "sample_train_app.csv"
+    sms: "sample_train_sms.csv"
+    user: "sample_train_user.csv"
+    voc: "sample_train_voc.csv"
 
 training:
   sample_size: 5000         # set to null or 0 for full dataset
-  profiling_mode: "minimal" # options: "minimal" or "full"
+  profiling_mode: "full" # options: "minimal" or "full"
 
 
 output:
@@ -19,7 +19,7 @@ preprocessing:
   categorical_features: ["city_name", "county_name"]
   target: "label"
 InputFeatures:
-    app: ["phone_no_m","busi_name","flow","month_id"]
-    sms: ["phone_no_m","opposite_no_m","calltype_id","request_datetime"]
-    user: ["phone_no_m","city_name","county_name","idcard_cnt","arpu_202004"]
-    voc: "test_voc.csv"
+    app:  ["phone_no_m","busi_name","flow","month_id"]
+    sms:  ["phone_no_m","opposite_no_m","calltype_id","request_datetime"]
+    user: ["phone_no_m","city_name","county_name","idcard_cnt","arpu_201908","arpu_201909","arpu_201910","arpu_201911","arpu_201912","arpu_202001","arpu_202002","arpu_202003","label"]
+    voc:  ["phone_no_m","opposite_no_m","calltype_id","start_datetime","call_dur","city_name","county_name","imei_m"]
