@@ -18,3 +18,8 @@ preprocessing:
   numeric_features: ["app_count", "total_flow", "avg_flow", "sms_count", "call_count", "avg_call_dur", "total_call_dur"]
   categorical_features: ["city_name", "county_name"]
   target: "label"
+InputFeatures:
+    app: ["phone_no_m","busi_name","flow","month_id"]
+    sms: ["phone_no_m","opposite_no_m","calltype_id","request_datetime"]
+    user: ["phone_no_m","city_name","county_name","idcard_cnt","arpu_202004"]
+    voc: "test_voc.csv"
