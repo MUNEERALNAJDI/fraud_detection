@@ -8,16 +8,31 @@ dataset:
 
 training:
   sample_size: 5000         # set to null or 0 for full dataset
-  profiling_mode: "full" # options: "minimal" or "full"
+  profiling_mode: "minimal" # options: "minimal" or "full"
 
 
 output:
   results_dir: "results/"
 
 preprocessing:
-  numeric_features: ["app_count", "total_flow", "avg_flow", "sms_count", "call_count", "avg_call_dur", "total_call_dur"]
-  categorical_features: ["city_name", "county_name"]
-  target: "label"
+  app:
+    numeric_features: ["flow", "month_id"]
+    categorical_features: ["busi_name"]
+  sms:
+    numeric_features: []
+    categorical_features: ["opposite_no_m", "calltype_id"]
+    datetime_features: ["request_datetime"]
+  user:
+    numeric_features: ["idcard_cnt",
+                       "arpu_201908","arpu_201909","arpu_201910","arpu_201911",
+                       "arpu_201912","arpu_202001","arpu_202002","arpu_202003"]
+    categorical_features: ["city_name","county_name"]
+    target: "label"
+  voc:
+    numeric_features: ["call_dur"]
+    categorical_features: ["calltype_id","city_name","county_name","imei_m"]
+    datetime_features: ["start_datetime"]
+
 InputFeatures:
     app:  ["phone_no_m","busi_name","flow","month_id"]
     sms:  ["phone_no_m","opposite_no_m","calltype_id","request_datetime"]

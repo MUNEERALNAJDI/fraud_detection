@@ -1,10 +1,10 @@
-pandas
-numpy
+pandas==2.2.2
+numpy<2.0.0
 scikit-learn
 pyyaml
 pytest
-ydata-profiling
-sweetviz
+ydata-profiling>=4.9.0
+sweetviz>=2.3.1
 featuretools
 tsfresh
 great_expectations
