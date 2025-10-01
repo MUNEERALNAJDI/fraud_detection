@@ -1,10 +1,18 @@
 dataset:
-  base_path: "/content/drive/MyDrive/Sem-6/coding/github/fraud_detection/dataset/CallChinses/raw/sample"
+  base_path: "/content/drive/MyDrive/Sem-6/coding/github/fraud_detection/dataset/CallChinses/processed/sample"
   files:
     app: "sample_train_app.csv"
     sms: "sample_train_sms.csv"
     user: "sample_train_user.csv"
     voc: "sample_train_voc.csv"
+
+#dataset:
+ # base_path: "/content/drive/MyDrive/Sem-6/coding/github/fraud_detection/dataset/CallChinses/raw/sample"
+  #files:
+   # app: "sample_train_app.csv"
+    #sms: "sample_train_sms.csv"
+    #user: "sample_train_user.csv"
+    #voc: "sample_train_voc.csv"
 
 training:
   sample_size: 5000         # set to null or 0 for full dataset
