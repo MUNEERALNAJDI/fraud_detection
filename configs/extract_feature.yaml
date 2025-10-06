@@ -1,0 +1,34 @@
+dataset:
+  base_path: "/content/drive/MyDrive/Sem-6/coding/github/fraud_detection/dataset/CallChinses/preprocessed"
+  files:
+    app: "preprocessed_app.csv"
+    sms: "preprocessed_sms.csv"
+    user: "preprocessed_user.csv"
+    voc: "preprocessed_voc.csv"
+
+aggregation:
+  mode: "full"            # options: "full", "n_events", "timely"
+  window: 10
+
+features:
+  features_dir: "/content/drive/MyDrive/Sem-6/coding/github/fraud_detection/features/"
+  include:
+    - app
+    - sms
+    - voc
+    - user
+training:    
+    sample_size: 5000        # ✅ Added — used for testing; set to null for full data
+
+output:
+  results_dir: "/content/drive/MyDrive/Sem-6/coding/github/fraud_detection/results/"
+  merged_features: "/content/drive/MyDrive/Sem-6/coding/github/fraud_detection/features/merged_features.csv"
+
+logging:
+  level: "INFO"
+
+feature_options:
+  normalization: true
+  imputation_strategy: "median"
+  encoding_strategy: "label"
+  save_intermediate: true
