@@ -18,7 +18,7 @@ features:
     - voc
     - user
 training:    
-    sample_size: 500        # ✅ Added — used for testing; set to null for full data
+    sample_size: null        # ✅ Added — used for testing; set to null for full data
 
 output:
   results_dir: "/content/drive/MyDrive/Sem-6/coding/github/fraud_detection/results/"

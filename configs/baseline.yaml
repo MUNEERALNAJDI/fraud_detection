@@ -1,13 +1,16 @@
-#dataset:
- # base_path: "/content/drive/MyDrive/Sem-6/coding/github/fraud_detection/dataset/CallChinses/processed/sample"
-  #files:
-   # app: "sample_train_app.csv"
-    #sms: "sample_train_sms.csv"
-    #user: "sample_train_user.csv"
-    #voc: "sample_train_voc.csv"
+sample_data:
+  size: 30
+  save_path: "/content/drive/MyDrive/Sem-6/coding/github/fraud_detection/dataset/CallChinses/raw/sample/sampled"
+  full_data: "/content/drive/MyDrive/Sem-6/coding/github/fraud_detection/dataset/CallChinses/raw/full"
+  files:
+    app: "app.csv"
+    sms: "sms.csv"
+    user: "user.csv"
+    voc: "voc.csv"
+
 
 dataset:
-  base_path: "/content/drive/MyDrive/Sem-6/coding/github/fraud_detection/dataset/CallChinses/raw/sample"
+  base_path: "/content/drive/MyDrive/Sem-6/coding/github/fraud_detection/dataset/CallChinses/raw/sample/sampled"
   files:
     app: "sample_train_app.csv"
     sms: "sample_train_sms.csv"
@@ -15,7 +18,7 @@ dataset:
     voc: "sample_train_voc.csv"
 
 training:
-  sample_size: 500         # set to null or 0 for full dataset
+  sample_size: null         # set to null or 0 for full dataset
   profiling_mode: "minimal" # options: "minimal" or "full"
 
 
@@ -46,3 +49,20 @@ InputFeatures:
     sms:  ["phone_no_m","opposite_no_m","calltype_id","request_datetime"]
     user: ["phone_no_m","city_name","county_name","idcard_cnt","arpu_201908","arpu_201909","arpu_201910","arpu_201911","arpu_201912","arpu_202001","arpu_202002","arpu_202003","label"]
     voc:  ["phone_no_m","opposite_no_m","calltype_id","start_datetime","call_dur","city_name","county_name","imei_m"]
+
+clustring:
+  raw:
+    base_path: "/content/drive/MyDrive/Sem-6/coding/github/fraud_detection/dataset/CallChinses/raw/sample/sampled"
+    files:
+      app: "sample_train_app.csv"
+      sms: "sample_train_sms.csv"
+      user: "sample_train_user.csv"
+      voc: "sample_train_voc.csv"
+Agg:
+  base_path: "/content/drive/MyDrive/Sem-6/coding/github/fraud_detection/dataset/CallChinses/preprocessed"
+  save_path: "/content/drive/MyDrive/Sem-6/coding/github/fraud_detection/dataset/CallChinses/features/"
+  files:
+    app: "preprocessed_app.csv"
+    sms: "preprocessed_sms.csv"
+    user: "preprocessed_user.csv"
+    voc: "preprocessed_voc.csv"
