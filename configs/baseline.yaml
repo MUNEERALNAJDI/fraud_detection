@@ -1,68 +1,153 @@
+# ===============================
+# Base Project Configuration
+# ===============================
+root_path: "/content/drive/MyDrive/Sem-6/coding/github/fraud_detection/"
+
+# ===============================
+# Sample Data
+# ===============================
 sample_data:
-  size: 30
-  save_path: "/content/drive/MyDrive/Sem-6/coding/github/fraud_detection/dataset/CallChinses/raw/sample/sampled"
-  full_data: "/content/drive/MyDrive/Sem-6/coding/github/fraud_detection/dataset/CallChinses/raw/full"
+  size: 1000
+  fraud_ratio: 0.3        # 30% fraud, 70% legit
+  full_data: "${root_path}dataset/CallChinses/raw/full"
+  save_path: "${root_path}dataset/CallChinses/raw/sample/sampled"
   files:
     app: "app.csv"
     sms: "sms.csv"
     user: "user.csv"
     voc: "voc.csv"
 
-
-dataset:
-  base_path: "/content/drive/MyDrive/Sem-6/coding/github/fraud_detection/dataset/CallChinses/raw/sample/sampled"
-  files:
-    app: "sample_train_app.csv"
-    sms: "sample_train_sms.csv"
-    user: "sample_train_user.csv"
-    voc: "sample_train_voc.csv"
-
-training:
-  sample_size: null         # set to null or 0 for full dataset
-  profiling_mode: "minimal" # options: "minimal" or "full"
-
-
-output:
-  results_dir: "results/"
-
-preprocessing:
-  app:
-    numeric_features: ["flow", "month_id"]
-    categorical_features: ["busi_name"]
-  sms:
-    numeric_features: []
-    categorical_features: ["opposite_no_m", "calltype_id"]
-    datetime_features: ["request_datetime"]
-  user:
-    numeric_features: ["idcard_cnt",
-                       "arpu_201908","arpu_201909","arpu_201910","arpu_201911",
-                       "arpu_201912","arpu_202001","arpu_202002","arpu_202003"]
-    categorical_features: ["city_name","county_name"]
-    target: "label"
-  voc:
-    numeric_features: ["call_dur"]
-    categorical_features: ["calltype_id","city_name","county_name","imei_m"]
-    datetime_features: ["start_datetime"]
-
-InputFeatures:
-    app:  ["phone_no_m","busi_name","flow","month_id"]
-    sms:  ["phone_no_m","opposite_no_m","calltype_id","request_datetime"]
-    user: ["phone_no_m","city_name","county_name","idcard_cnt","arpu_201908","arpu_201909","arpu_201910","arpu_201911","arpu_201912","arpu_202001","arpu_202002","arpu_202003","label"]
-    voc:  ["phone_no_m","opposite_no_m","calltype_id","start_datetime","call_dur","city_name","county_name","imei_m"]
-
+# ===============================
+# Clustering
+# ===============================
+#=========sample
+#clustring:
+#  raw:
+#    base_path: "${root_path}dataset/CallChinses/raw/sample/sampled"
+#    files:
+#      app: "sample_train_app.csv"
+#      sms: "sample_train_sms.csv"
+#      user: "sample_train_user.csv"
+#      voc: "sample_train_voc.csv"
+#============Full
 clustring:
   raw:
-    base_path: "/content/drive/MyDrive/Sem-6/coding/github/fraud_detection/dataset/CallChinses/raw/sample/sampled"
+    base_path: "${root_path}dataset/CallChinses/raw/full/"
     files:
-      app: "sample_train_app.csv"
-      sms: "sample_train_sms.csv"
-      user: "sample_train_user.csv"
-      voc: "sample_train_voc.csv"
+      app: "app.csv"
+      sms: "sms.csv"
+      user: "user.csv"
+      voc: "voc.csv"
+
+# =
+# ===============================
+# Exploratory Data Analysis (EDA)
+# ===============================
+#=====sample
+#EDA:
+#  base_path: "${root_path}dataset/CallChinses/raw/sample/sampled"
+#  files:
+#    app: "sample_train_app.csv"
+#    sms: "sample_train_sms.csv"
+#    user: "sample_train_user.csv"
+#    voc: "sample_train_voc.csv"
+#  sample_size: null
+#  preprocessing_output: "${root_path}dataset/CallChinses/preprocessed/sample/"
+
+#=====full
+EDA:
+  base_path: "${root_path}dataset/CallChinses/raw/full/"
+  files:
+    app: "app.csv"
+    sms: "sms.csv"
+    user: "user.csv"
+    voc: "voc.csv"
+  sample_size: null
+  preprocessing_output: "${root_path}dataset/CallChinses/preprocessed/full/"
+
+
+
+# ===============================
+# Aggregation and Feature Engineering
+# ===============================
+#Agg:
+#  input_path: "${root_path}dataset/CallChinses/preprocessed/sample"
+#  save_path: "${root_path}dataset/CallChinses/snapshots/sample"
+#  files:
+#    app: "preprocessed_app.csv"
+#    sms: "preprocessed_sms.csv"
+#    user: "preprocessed_user.csv"
+#    voc: "preprocessed_voc.csv" 
 Agg:
-  base_path: "/content/drive/MyDrive/Sem-6/coding/github/fraud_detection/dataset/CallChinses/preprocessed"
-  save_path: "/content/drive/MyDrive/Sem-6/coding/github/fraud_detection/dataset/CallChinses/features/"
+  input_path: "${root_path}dataset/CallChinses/preprocessed/full"
+  save_path: "${root_path}dataset/CallChinses/snapshots/full"
   files:
     app: "preprocessed_app.csv"
     sms: "preprocessed_sms.csv"
     user: "preprocessed_user.csv"
     voc: "preprocessed_voc.csv"
+
+# ===============================
+# Machine Learning Configuration
+# ===============================
+ML:
+  snapshot_input: "${root_path}dataset/CallChinses/snapshots/full/"
+  snapshot_file: "user_snapshots_100_users_5929_mode_time_size_10_20251025_181414.csv"
+  Events:
+    base_path: "${root_path}dataset/CallChinses/preprocessed/full/"
+    files:
+      app: "preprocessed_app.csv"
+      sms: "preprocessed_sms.csv"
+      user: "preprocessed_user.csv"
+      voc: "preprocessed_voc.csv"
+
+# ===============================
+# Training Configuration
+# ===============================
+training:
+  sample_size: null         # set to null or 0 for full dataset
+  profiling_mode: "minimal" # options: "minimal" or "full"
+
+# ===============================
+# Output Configuration
+# ===============================
+output:
+  results_dir: "${root_path}results/"
+
+# ===============================
+# Preprocessing Configuration
+# ===============================
+preprocessing:
+  app:
+    numeric_features: ["flow", "month_id"]
+    categorical_features: ["busi_name"]
+
+  sms:
+    numeric_features: []
+    categorical_features: ["opposite_no_m", "calltype_id"]
+    datetime_features: ["request_datetime"]
+
+  user:
+    numeric_features:
+      ["idcard_cnt",
+       "arpu_201908","arpu_201909","arpu_201910","arpu_201911",
+       "arpu_201912","arpu_202001","arpu_202002","arpu_202003"]
+    categorical_features: ["city_name","county_name"]
+    target: "label"
+
+  voc:
+    numeric_features: ["call_dur"]
+    categorical_features: ["calltype_id","city_name","county_name","imei_m"]
+    datetime_features: ["start_datetime"]
+
+# ===============================
+# Input Feature Lists
+# ===============================
+InputFeatures:
+  app:  ["phone_no_m","busi_name","flow","month_id"]
+  sms:  ["phone_no_m","opposite_no_m","calltype_id","request_datetime"]
+  user: ["phone_no_m","city_name","county_name","idcard_cnt",
+         "arpu_201908","arpu_201909","arpu_201910","arpu_201911",
+         "arpu_201912","arpu_202001","arpu_202002","arpu_202003","label"]
+  voc:  ["phone_no_m","opposite_no_m","calltype_id","start_datetime",
+         "call_dur","city_name","county_name","imei_m"]
