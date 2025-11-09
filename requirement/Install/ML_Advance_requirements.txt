@@ -1,0 +1,6 @@
+mamba-ssm
+einops
+transformers
+causal-conv1d
+kernels
+

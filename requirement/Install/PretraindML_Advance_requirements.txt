@@ -1,0 +1,8 @@
+einops
+transformers
+causal-conv1d
+kernels
+torch
+huggingface_hub
+datasets
+timm

@@ -93,6 +93,7 @@ Agg:
 ML:
   snapshot_input: "${root_path}dataset/CallChinses/snapshots/full/"
   snapshot_file: "user_snapshots_100_users_5929_mode_time_size_10_20251025_181414.csv"
+  limit: 50
   Events:
     base_path: "${root_path}dataset/CallChinses/preprocessed/full/"
     files:
