@@ -42,3 +42,9 @@ Checkpints/*
 !Checkpints/**/
 Checkpints/**/*
 !Checkpints/**/*.gitkeep
+
+# ======================
+# Ignore project folders
+Informer2020/
+Time-Series-Library/
+timesfm/
