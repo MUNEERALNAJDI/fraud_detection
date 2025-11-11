@@ -28,3 +28,17 @@ logs/**/*
 __pycache__/
 *.pyc
 .DS_Store
+
+# ======================
+# Ignore ExternalDataset files but keep folder structure
+ExternalDataset/*
+!ExternalDataset/**/
+ExternalDataset/**/*
+!ExternalDataset/**/*.gitkeep
+
+# ======================
+# Ignore Checkpints files but keep folder structure
+Checkpints/*
+!Checkpints/**/
+Checkpints/**/*
+!Checkpints/**/*.gitkeep
