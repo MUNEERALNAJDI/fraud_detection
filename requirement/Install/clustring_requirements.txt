@@ -1,0 +1,2 @@
+vegafusion
+altair[all]

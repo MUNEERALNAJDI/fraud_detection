@@ -1,0 +1,7 @@
+Model,Threshold_F1,Threshold_F2,Val_F2,Test_F1_at_F2,Test_Recall_at_F2,Test_Precision_at_F2
+XGBoost,0.43,0.21,0.7721,0.6545,0.8219,0.5438
+RandomForest,0.37,0.23,0.7677,0.6653,0.8219,0.5588
+LSTM,0.22,0.2,0.7315,0.6952,0.6819,0.709
+TransformerFraud,0.47,0.21,0.7658,0.7138,0.7964,0.6467
+TimesNet_PartialUnfreeze,0.27,0.22,0.7297,0.6925,0.7506,0.6427
+TimesNet_Unfrozen,0.44,0.21,0.7702,0.691,0.771,0.626

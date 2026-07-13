@@ -1,0 +1,46 @@
+# ============================================================
+# Keep directory structures, but exclude generated/large files
+# A .gitkeep file must exist inside every directory to preserve it.
+# ============================================================
+
+# Shared split data
+/splits/shared_user_split_v1/**
+!/splits/shared_user_split_v1/**/
+!/splits/shared_user_split_v1/**/.gitkeep
+
+# Main dataset
+/dataset/**
+!/dataset/**/
+!/dataset/**/.gitkeep
+
+# Downloaded checkpoints
+/DownloadedCheckpints/**
+!/DownloadedCheckpints/**/
+!/DownloadedCheckpints/**/.gitkeep
+
+# External datasets
+/ExternalDataset/**
+!/ExternalDataset/**/
+!/ExternalDataset/**/.gitkeep
+
+# Time-Series-Library generated outputs
+/Time-Series-Library/results/**
+!/Time-Series-Library/results/**/
+!/Time-Series-Library/results/**/.gitkeep
+
+/Time-Series-Library/checkpoints/**
+!/Time-Series-Library/checkpoints/**/
+!/Time-Series-Library/checkpoints/**/.gitkeep
+
+/Time-Series-Library/test_results/**
+!/Time-Series-Library/test_results/**/
+!/Time-Series-Library/test_results/**/.gitkeep
+
+# Python and notebook temporary files
+**/__pycache__/
+*.py[cod]
+**/.ipynb_checkpoints/
+
+# OS/editor temporary files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,10 @@
+torch
+transformers
+huggingface_hub
+datasets
+timm
+patool
+sktime
+reformer_pytorch
+optuna
+ptflops
