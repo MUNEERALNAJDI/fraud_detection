@@ -34,13 +34,28 @@ Label distribution: **1,962 fraud / 6,106 subscribers (32.13%)**. Labels are rea
 
 ## Pipeline at a glance
 
+![Experimental pipeline](docs/pipeline.png)
+
+*The four raw source tables are cleaned and partitioned once at subscriber level; each subscriber's
+oldest SL events are converted into two parallel representations, consumed by the sequence and
+tabular families respectively. Architecture search and threshold calibration consult validation data
+only; the test partition is read once, at final evaluation.*
+
+### Measured trade-off
+
+![Detection quality against observation length](docs/earliness.png)
+
+*A verdict at four events retains 83% of the F1 attainable at 1,645 events (the median subscriber
+history) while observing 0.24% of the events.*
+
+### Notebook execution order
 ```
 raw CSVs
   └─[1] eda_preprocessing ──────────► preprocessed CSVs
   └─[2] Clustring (figures only)
           │
           ▼
-       [3] NAS × 12  (search per model × SL) ──► trial logs (results/NAS_v2)
+       [3] NAS × 15  (search per model × SL) ──► trial logs (results/NAS_v2)
           │
           ▼
        [4] NAS Analysis (assemble + select) ──► chosen configs
@@ -58,7 +73,7 @@ raw CSVs
 |---|---|---|---|---|
 | 1 | Preprocess + EDA | `eda_preprocessing.ipynb` | Clean the four raw tables (§4.3); profiling reports; t-SNE (Fig. 4.2) | raw `app/sms/user/voc.csv` → `preprocessed_*.csv` |
 | 2 | Fraud-distribution analysis | `Clustring.ipynb` | Bubble chart per application (Fig. 4.1). Exploratory only — nothing downstream consumes it | raw CSVs → Fig. 4.1 |
-| 3 | Architecture search | 12 notebooks: {TimesNet, LSTM, Transformer, RF+XGB} × WL_{4,6,16} | 100 Optuna TPE trials per (model, SL); objective = **validation** F1; test metrics logged, never used for selection. Manual seeds enqueued per study | preprocessed CSVs + label registry + frozen split → `results/NAS_v2/nas_*_{trial_log,results}_WL{sl}.csv` |
+| 3 | Architecture search | 15 notebooks: {TimesNet, LSTM, Transformer, RF+XGB} × WL_{4,6,16} | 100 Optuna TPE trials per (model, SL); objective = **validation** F1; test metrics logged, never used for selection. Manual seeds enqueued per study | preprocessed CSVs + label registry + frozen split → `results/NAS_v2/nas_*_{trial_log,results}_WL{sl}.csv` |
 | 4 | Selection | `NAS Analysis.ipynb` | Assembles trial logs and applies the frozen validation-stability rule (band 0.01 → val AUC → smaller model → trial id) to pick one trial per (model, SL) per population | `results/NAS_v2/*.csv` → `NAS_RESULT_v2/*.txt` + selection CSVs |
 | 5 | Consolidated evaluation | `Best of each_Base{4,6,16}` + `Manual Best of each` × 3 | Retrain each selected configuration under the unified protocol; validation-calibrated threshold (61-point grid over 0.20–0.80); test metrics, FLOPs, latency, per-round evaluation | selected configs + preprocessed CSVs + frozen split → summary and per-round tables, Figs. 5.1–5.9 |
 | 6 | Winners + macro | `consolidated_results.xlsx` (no code) | Filtration trace and per-SL winner (§4.11, §6.3); macro metrics derived from the confusion matrix (test: 393 fraud / 829 normal) | stage-5 tables → Tables 5.5, 6.1, 6.2 |
